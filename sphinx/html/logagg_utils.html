@@ -1,0 +1,231 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>logagg_utils package &#8212; logagg_utils 0.0.1 documentation</title>
+    <link rel="stylesheet" href="_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">logagg_utils 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="logagg-utils-package">
+<h1>logagg_utils package<a class="headerlink" href="#logagg-utils-package" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="submodules">
+<h2>Submodules<a class="headerlink" href="#submodules" title="Permalink to this headline">¶</a></h2>
+</div>
+<div class="section" id="module-logagg_utils.utils">
+<span id="logagg-utils-utils-module"></span><h2>logagg_utils.utils module<a class="headerlink" href="#module-logagg_utils.utils" title="Permalink to this headline">¶</a></h2>
+<dl class="class">
+<dt id="logagg_utils.utils.MarkValue">
+<em class="property">class </em><code class="descclassname">logagg_utils.utils.</code><code class="descname">MarkValue</code><a class="reference internal" href="_modules/logagg_utils/utils.html#MarkValue"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.MarkValue" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.ensure_dir">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">ensure_dir</code><span class="sig-paren">(</span><em>dir_path</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#ensure_dir"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.ensure_dir" title="Permalink to this definition">¶</a></dt>
+<dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span> <span class="o">=</span> <span class="s1">&#39;/tmp/orange/apple/banana&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ensure_dir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="go">&#39;/tmp/orange/apple/banana&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/tmp/orange&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/tmp/orange/apple&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/tmp/orange/apple/banana&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.flatten_dict">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">flatten_dict</code><span class="sig-paren">(</span><em>d</em>, <em>parent_key=''</em>, <em>sep='.'</em>, <em>ignore_under_prefixed=True</em>, <em>mark_value=True</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#flatten_dict"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.flatten_dict" title="Permalink to this definition">¶</a></dt>
+<dd><p>For a given dictionary, flattens the structure</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fd</span> <span class="o">=</span> <span class="n">flatten_dict</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;__d&quot;</span><span class="p">:</span> <span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s2">&quot;_e&quot;</span><span class="p">:</span> <span class="s2">&quot;mark&quot;</span><span class="p">}</span> <span class="p">}</span> <span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+<span class="go">{&#39;a.b._e&#39;: &quot;&#39;mark&#39;&quot;, &#39;a.b.b&#39;: 2, &#39;a.b.c&#39;: 1}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.is_number">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">is_number</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#is_number"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.is_number" title="Permalink to this definition">¶</a></dt>
+<dd><p>Determines the type is number or not</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="mf">45.0</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="mi">45</span><span class="o">/</span><span class="mi">56</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.ispartial">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">ispartial</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#ispartial"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.ispartial" title="Permalink to this definition">¶</a></dt>
+<dd><p>If log line starts with a space it is recognized as a partial line</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">ispartial</span><span class="p">(</span><span class="s1">&#39;&lt;time&gt; &lt;event&gt; &lt;some_log_line&gt;&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ispartial</span><span class="p">(</span><span class="s1">&#39; &lt;space&gt; &lt;traceback:&gt; &lt;some_line&gt;&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ispartial</span><span class="p">(</span><span class="s1">&#39;         &lt;tab&gt; &lt;traceback:&gt; &lt;some_line&gt;&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ispartial</span><span class="p">(</span><span class="s1">&#39;   &lt;white_space&gt; &lt;traceback:&gt; &lt;some_line&gt;&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ispartial</span><span class="p">(</span><span class="s1">&#39;&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.load_object">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">load_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logagg_utils.utils.load_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.log_exception">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">log_exception</code><span class="sig-paren">(</span><em>self</em>, <em>__fn__</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#log_exception"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.log_exception" title="Permalink to this definition">¶</a></dt>
+<dd><p>Logging traceback in keeprunning methods</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.memoize">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">memoize</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#memoize"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.memoize" title="Permalink to this definition">¶</a></dt>
+<dd><p>From: <a class="reference external" href="https://goo.gl/aXt4Qy">https://goo.gl/aXt4Qy</a></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.serialize_dict_keys">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">serialize_dict_keys</code><span class="sig-paren">(</span><em>d</em>, <em>prefix=''</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#serialize_dict_keys"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.serialize_dict_keys" title="Permalink to this definition">¶</a></dt>
+<dd><p>Returns all the keys in a dictionary</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">d</span> <span class="o">=</span> <span class="p">{</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">}</span> <span class="p">}</span> <span class="p">}</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">serialize_dict_keys</span><span class="p">(</span><span class="n">d</span><span class="p">))</span>
+<span class="go">[&#39;a&#39;, &#39;a.b&#39;, &#39;a.b.b&#39;, &#39;a.b.c&#39;]</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.start_daemon_thread">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">start_daemon_thread</code><span class="sig-paren">(</span><em>target</em>, <em>args=()</em><span class="sig-paren">)</span><a class="reference internal" href="_modules/logagg_utils/utils.html#start_daemon_thread"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#logagg_utils.utils.start_daemon_thread" title="Permalink to this definition">¶</a></dt>
+<dd><p>Starts a deamon thread for a given target function and arguments</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">def</span> <span class="nf">hello</span><span class="p">():</span>
+<span class="gp">... </span>    <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">5</span><span class="p">):</span> <span class="nb">print</span><span class="p">(</span><span class="s1">&#39;hello world!&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">th</span> <span class="o">=</span> <span class="n">start_daemon_thread</span><span class="p">(</span><span class="n">hello</span><span class="p">)</span><span class="o">.</span><span class="n">join</span><span class="p">()</span>
+<span class="go">hello world!</span>
+<span class="go">hello world!</span>
+<span class="go">hello world!</span>
+<span class="go">hello world!</span>
+<span class="go">hello world!</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</div>
+<div class="section" id="module-logagg_utils">
+<span id="module-contents"></span><h2>Module contents<a class="headerlink" href="#module-logagg_utils" title="Permalink to this headline">¶</a></h2>
+<dl class="function">
+<dt id="logagg_utils.load_object">
+<code class="descclassname">logagg_utils.</code><code class="descname">load_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#logagg_utils.load_object" title="Permalink to this definition">¶</a></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+  <h3><a href="index.html">Table Of Contents</a></h3>
+  <ul>
+<li><a class="reference internal" href="#">logagg_utils package</a><ul>
+<li><a class="reference internal" href="#submodules">Submodules</a></li>
+<li><a class="reference internal" href="#module-logagg_utils.utils">logagg_utils.utils module</a></li>
+<li><a class="reference internal" href="#module-logagg_utils">Module contents</a></li>
+</ul>
+</li>
+</ul>
+
+  <div role="note" aria-label="source link">
+    <h3>This Page</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/logagg_utils.rst.txt"
+            rel="nofollow">Show Source</a></li>
+    </ul>
+   </div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">logagg_utils 0.0.1 documentation</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DeepCompute LLC.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+    </div>
+  </body>
+</html>

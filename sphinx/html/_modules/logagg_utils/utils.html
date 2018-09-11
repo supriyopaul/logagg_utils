@@ -1,0 +1,268 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>logagg_utils.utils &#8212; logagg_utils 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/classic.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             accesskey="I">index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">logagg_utils 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" accesskey="U">Module code</a> &#187;</li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <h1>Source code for logagg_utils.utils</h1><div class="highlight"><pre>
+<span></span><span class="kn">import</span> <span class="nn">collections</span>
+<span class="kn">from</span> <span class="nn">operator</span> <span class="k">import</span> <span class="n">attrgetter</span>
+<span class="kn">import</span> <span class="nn">traceback</span>
+<span class="kn">from</span> <span class="nn">threading</span> <span class="k">import</span> <span class="n">Thread</span>
+<span class="kn">from</span> <span class="nn">os</span> <span class="k">import</span> <span class="n">path</span><span class="p">,</span> <span class="n">makedirs</span>
+<span class="kn">from</span> <span class="nn">re</span> <span class="k">import</span> <span class="n">match</span>
+<span class="kn">import</span> <span class="nn">numbers</span>
+
+<span class="kn">from</span> <span class="nn">six</span> <span class="k">import</span> <span class="n">iteritems</span>
+<span class="kn">from</span> <span class="nn">deeputil</span> <span class="k">import</span> <span class="n">Dummy</span>
+
+<span class="n">DUMMY</span> <span class="o">=</span> <span class="n">Dummy</span><span class="p">()</span>
+
+
+<div class="viewcode-block" id="log_exception"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.log_exception">[docs]</a><span class="k">def</span> <span class="nf">log_exception</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">__fn__</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Logging traceback in keeprunning methods</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="bp">self</span><span class="o">.</span><span class="n">log</span><span class="o">.</span><span class="n">exception</span><span class="p">(</span><span class="s1">&#39;error_during_run_Continuing&#39;</span><span class="p">,</span> <span class="n">fn</span><span class="o">=</span><span class="n">__fn__</span><span class="o">.</span><span class="vm">__name__</span><span class="p">,</span>
+                <span class="n">tb</span><span class="o">=</span><span class="nb">repr</span><span class="p">(</span><span class="n">traceback</span><span class="o">.</span><span class="n">format_exc</span><span class="p">()))</span></div>
+
+
+<div class="viewcode-block" id="start_daemon_thread"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.start_daemon_thread">[docs]</a><span class="k">def</span> <span class="nf">start_daemon_thread</span><span class="p">(</span><span class="n">target</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="p">()):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Starts a deamon thread for a given target function and arguments</span>
+
+<span class="sd">    &gt;&gt;&gt; def hello():</span>
+<span class="sd">    ...     for i in range(5): print(&#39;hello world!&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; th = start_daemon_thread(hello).join()</span>
+<span class="sd">    hello world!</span>
+<span class="sd">    hello world!</span>
+<span class="sd">    hello world!</span>
+<span class="sd">    hello world!</span>
+<span class="sd">    hello world!</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">th</span> <span class="o">=</span> <span class="n">Thread</span><span class="p">(</span><span class="n">target</span><span class="o">=</span><span class="n">target</span><span class="p">,</span> <span class="n">args</span><span class="o">=</span><span class="n">args</span><span class="p">)</span>
+    <span class="n">th</span><span class="o">.</span><span class="n">daemon</span> <span class="o">=</span> <span class="kc">True</span>
+    <span class="n">th</span><span class="o">.</span><span class="n">start</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">th</span></div>
+
+
+<div class="viewcode-block" id="serialize_dict_keys"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.serialize_dict_keys">[docs]</a><span class="k">def</span> <span class="nf">serialize_dict_keys</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;&quot;</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Returns all the keys in a dictionary</span>
+
+<span class="sd">    &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">    &gt;&gt;&gt; d = {&quot;a&quot;: {&quot;b&quot;: {&quot;c&quot;: 1, &quot;b&quot;: 2} } }</span>
+<span class="sd">    &gt;&gt;&gt; pprint(serialize_dict_keys(d))</span>
+<span class="sd">    [&#39;a&#39;, &#39;a.b&#39;, &#39;a.b.b&#39;, &#39;a.b.c&#39;]</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">keys</span> <span class="o">=</span> <span class="p">[]</span>
+    <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">iteritems</span><span class="p">(</span><span class="n">d</span><span class="p">):</span>
+        <span class="n">fqk</span> <span class="o">=</span> <span class="s1">&#39;</span><span class="si">%s%s</span><span class="s1">&#39;</span> <span class="o">%</span> <span class="p">(</span><span class="n">prefix</span><span class="p">,</span> <span class="n">k</span><span class="p">)</span>
+        <span class="n">keys</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">fqk</span><span class="p">)</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="nb">dict</span><span class="p">):</span>
+            <span class="n">keys</span><span class="o">.</span><span class="n">extend</span><span class="p">(</span><span class="n">serialize_dict_keys</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">prefix</span><span class="o">=</span><span class="s2">&quot;</span><span class="si">%s</span><span class="s2">.&quot;</span> <span class="o">%</span> <span class="n">fqk</span><span class="p">))</span>
+
+    <span class="k">return</span> <span class="n">keys</span></div>
+
+
+<div class="viewcode-block" id="MarkValue"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.MarkValue">[docs]</a><span class="k">class</span> <span class="nc">MarkValue</span><span class="p">(</span><span class="nb">str</span><span class="p">):</span> <span class="k">pass</span></div>
+
+<div class="viewcode-block" id="flatten_dict"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.flatten_dict">[docs]</a><span class="k">def</span> <span class="nf">flatten_dict</span><span class="p">(</span><span class="n">d</span><span class="p">,</span> <span class="n">parent_key</span><span class="o">=</span><span class="s1">&#39;&#39;</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="s1">&#39;.&#39;</span><span class="p">,</span>
+                    <span class="n">ignore_under_prefixed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">mark_value</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    For a given dictionary, flattens the structure</span>
+
+<span class="sd">    &gt;&gt;&gt; from pprint import pprint</span>
+<span class="sd">    &gt;&gt;&gt; fd = flatten_dict({&quot;a&quot;: {&quot;b&quot;: {&quot;c&quot;: 1, &quot;b&quot;: 2, &quot;__d&quot;: &#39;ignore&#39;, &quot;_e&quot;: &quot;mark&quot;} } })</span>
+<span class="sd">    &gt;&gt;&gt; pprint(fd)</span>
+<span class="sd">    {&#39;a.b._e&#39;: &quot;&#39;mark&#39;&quot;, &#39;a.b.b&#39;: 2, &#39;a.b.c&#39;: 1}</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">items</span> <span class="o">=</span> <span class="p">{}</span>
+    <span class="k">for</span> <span class="n">k</span> <span class="ow">in</span> <span class="n">d</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">ignore_under_prefixed</span> <span class="ow">and</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+            <span class="k">continue</span>
+        <span class="n">v</span> <span class="o">=</span> <span class="n">d</span><span class="p">[</span><span class="n">k</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">mark_value</span> <span class="ow">and</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;_&#39;</span><span class="p">)</span> <span class="ow">and</span> <span class="ow">not</span> <span class="n">k</span><span class="o">.</span><span class="n">startswith</span><span class="p">(</span><span class="s1">&#39;__&#39;</span><span class="p">):</span>
+            <span class="n">v</span> <span class="o">=</span> <span class="n">MarkValue</span><span class="p">(</span><span class="nb">repr</span><span class="p">(</span><span class="n">v</span><span class="p">))</span>
+
+        <span class="n">new_key</span> <span class="o">=</span> <span class="n">sep</span><span class="o">.</span><span class="n">join</span><span class="p">((</span><span class="n">parent_key</span><span class="p">,</span> <span class="n">k</span><span class="p">))</span> <span class="k">if</span> <span class="n">parent_key</span> <span class="k">else</span> <span class="n">k</span>
+        <span class="k">if</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">collections</span><span class="o">.</span><span class="n">MutableMapping</span><span class="p">):</span>
+            <span class="n">items</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">flatten_dict</span><span class="p">(</span><span class="n">v</span><span class="p">,</span> <span class="n">new_key</span><span class="p">,</span> <span class="n">sep</span><span class="o">=</span><span class="n">sep</span><span class="p">,</span>
+                                        <span class="n">ignore_under_prefixed</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+                                        <span class="n">mark_value</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+                            <span class="p">)</span>
+        <span class="k">else</span><span class="p">:</span>
+            <span class="n">items</span><span class="p">[</span><span class="n">new_key</span><span class="p">]</span> <span class="o">=</span> <span class="n">v</span>
+    <span class="k">return</span> <span class="n">items</span></div>
+
+
+<div class="viewcode-block" id="is_number"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.is_number">[docs]</a><span class="k">def</span> <span class="nf">is_number</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Determines the type is number or not</span>
+
+<span class="sd">    &gt;&gt;&gt; is_number(&#39;45&#39;)</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; is_number(45)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_number(45.0)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; is_number(45/56)</span>
+<span class="sd">    True</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">x</span><span class="p">,</span> <span class="n">numbers</span><span class="o">.</span><span class="n">Number</span><span class="p">)</span></div>
+
+
+<div class="viewcode-block" id="ispartial"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.ispartial">[docs]</a><span class="k">def</span> <span class="nf">ispartial</span><span class="p">(</span><span class="n">x</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    If log line starts with a space it is recognized as a partial line</span>
+
+<span class="sd">    &gt;&gt;&gt; ispartial(&#39;&lt;time&gt; &lt;event&gt; &lt;some_log_line&gt;&#39;)</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; ispartial(&#39; &lt;space&gt; &lt;traceback:&gt; &lt;some_line&gt;&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; ispartial(&#39;         &lt;tab&gt; &lt;traceback:&gt; &lt;some_line&gt;&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; ispartial(&#39;   &lt;white_space&gt; &lt;traceback:&gt; &lt;some_line&gt;&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; ispartial(&#39;&#39;)</span>
+<span class="sd">    False</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">spaces</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39; &#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\t</span><span class="s1">&#39;</span><span class="p">,</span> <span class="s1">&#39;</span><span class="se">\n</span><span class="s1">&#39;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">x</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span> <span class="ow">in</span> <span class="n">spaces</span><span class="p">:</span>
+            <span class="k">return</span> <span class="kc">True</span>
+    <span class="k">except</span> <span class="ne">IndexError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="k">return</span> <span class="kc">False</span></div>
+
+<div class="viewcode-block" id="ensure_dir"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.ensure_dir">[docs]</a><span class="k">def</span> <span class="nf">ensure_dir</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    &gt;&gt;&gt; import os</span>
+<span class="sd">    &gt;&gt;&gt; dir = &#39;/tmp/orange/apple/banana&#39;</span>
+<span class="sd">    &gt;&gt;&gt; os.path.isdir(dir)</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; os.path.isdir(dir)</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; ensure_dir(dir)</span>
+<span class="sd">    &#39;/tmp/orange/apple/banana&#39;</span>
+<span class="sd">    &gt;&gt;&gt; os.path.isdir(&#39;/tmp/orange&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; os.path.isdir(&#39;/tmp/orange/apple&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &gt;&gt;&gt; os.path.isdir(&#39;/tmp/orange/apple/banana&#39;)</span>
+<span class="sd">    True</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">path</span><span class="o">.</span><span class="n">exists</span><span class="p">(</span><span class="n">dir_path</span><span class="p">):</span>
+        <span class="n">makedirs</span><span class="p">(</span><span class="n">dir_path</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">dir_path</span></div>
+
+
+<div class="viewcode-block" id="memoize"><a class="viewcode-back" href="../../logagg_utils.html#logagg_utils.utils.memoize">[docs]</a><span class="k">def</span> <span class="nf">memoize</span><span class="p">(</span><span class="n">f</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    From: https://goo.gl/aXt4Qy</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="c1"># TODO: Test cases</span>
+    <span class="k">class</span> <span class="nc">memodict</span><span class="p">(</span><span class="nb">dict</span><span class="p">):</span>
+        <span class="vm">__slots__</span> <span class="o">=</span> <span class="p">()</span>
+
+        <span class="k">def</span> <span class="nf">__missing__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
+            <span class="bp">self</span><span class="p">[</span><span class="n">key</span><span class="p">]</span> <span class="o">=</span> <span class="n">ret</span> <span class="o">=</span> <span class="n">f</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+            <span class="k">return</span> <span class="n">ret</span>
+    <span class="k">return</span> <span class="n">memodict</span><span class="p">()</span><span class="o">.</span><span class="fm">__getitem__</span></div>
+
+
+<span class="nd">@memoize</span>
+<span class="k">def</span> <span class="nf">load_object</span><span class="p">(</span><span class="n">imp_path</span><span class="p">):</span>
+    <span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    Given a python import path, load the object</span>
+<span class="sd">    For dynamic imports in a program</span>
+
+<span class="sd">    &gt;&gt;&gt; isdir = load_object(&#39;os.path.isdir&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; isdir(&#39;/tmp&#39;)</span>
+<span class="sd">    True</span>
+
+<span class="sd">    &gt;&gt;&gt; num = load_object(&#39;numbers.Number&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(&#39;x&#39;, num)</span>
+<span class="sd">    False</span>
+<span class="sd">    &gt;&gt;&gt; isinstance(777, num)</span>
+<span class="sd">    True</span>
+<span class="sd">    &#39;&#39;&#39;</span>
+    <span class="n">module_name</span><span class="p">,</span> <span class="n">obj_name</span> <span class="o">=</span> <span class="n">imp_path</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">&#39;.&#39;</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+    <span class="n">module</span> <span class="o">=</span> <span class="nb">__import__</span><span class="p">(</span><span class="n">module_name</span><span class="p">)</span>
+    <span class="n">obj</span> <span class="o">=</span> <span class="n">attrgetter</span><span class="p">(</span><span class="n">obj_name</span><span class="p">)(</span><span class="n">module</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="n">obj</span>
+</pre></div>
+
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../../genindex.html" title="General Index"
+             >index</a></li>
+        <li class="right" >
+          <a href="../../py-modindex.html" title="Python Module Index"
+             >modules</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../../index.html">logagg_utils 0.0.1 documentation</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="../index.html" >Module code</a> &#187;</li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2018, DeepCompute LLC.
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 1.7.9.
+    </div>
+  </body>
+</html>

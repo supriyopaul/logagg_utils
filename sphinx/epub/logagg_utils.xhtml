@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:epub="http://www.idpf.org/2007/ops">
+  <head>
+    <meta charset="utf-8" />
+    <title>logagg_utils package</title>
+    <link rel="stylesheet" href="_static/epub.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" /> 
+  </head><body>
+
+    <div class="document">
+      <div class="documentwrapper">
+          <div class="body" role="main">
+            
+  <div class="section" id="logagg-utils-package">
+<h1>logagg_utils package</h1>
+<div class="section" id="submodules">
+<h2>Submodules</h2>
+</div>
+<div class="section" id="module-logagg_utils.utils">
+<span id="logagg-utils-utils-module"></span><h2>logagg_utils.utils module</h2>
+<dl class="class">
+<dt id="logagg_utils.utils.MarkValue">
+<em class="property">class </em><code class="descclassname">logagg_utils.utils.</code><code class="descname">MarkValue</code></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.ensure_dir">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">ensure_dir</code><span class="sig-paren">(</span><em>dir_path</em><span class="sig-paren">)</span></dt>
+<dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">os</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">dir</span> <span class="o">=</span> <span class="s1">&#39;/tmp/orange/apple/banana&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ensure_dir</span><span class="p">(</span><span class="nb">dir</span><span class="p">)</span>
+<span class="go">&#39;/tmp/orange/apple/banana&#39;</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/tmp/orange&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/tmp/orange/apple&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isdir</span><span class="p">(</span><span class="s1">&#39;/tmp/orange/apple/banana&#39;</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.flatten_dict">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">flatten_dict</code><span class="sig-paren">(</span><em>d</em>, <em>parent_key=''</em>, <em>sep='.'</em>, <em>ignore_under_prefixed=True</em>, <em>mark_value=True</em><span class="sig-paren">)</span></dt>
+<dd><p>For a given dictionary, flattens the structure</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">pprint</span> <span class="k">import</span> <span class="n">pprint</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">fd</span> <span class="o">=</span> <span class="n">flatten_dict</span><span class="p">({</span><span class="s2">&quot;a&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="p">{</span><span class="s2">&quot;c&quot;</span><span class="p">:</span> <span class="mi">1</span><span class="p">,</span> <span class="s2">&quot;b&quot;</span><span class="p">:</span> <span class="mi">2</span><span class="p">,</span> <span class="s2">&quot;__d&quot;</span><span class="p">:</span> <span class="s1">&#39;ignore&#39;</span><span class="p">,</span> <span class="s2">&quot;_e&quot;</span><span class="p">:</span> <span class="s2">&quot;mark&quot;</span><span class="p">}</span> <span class="p">}</span> <span class="p">})</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">pprint</span><span class="p">(</span><span class="n">fd</span><span class="p">)</span>
+<span class="go">{&#39;a.b._e&#39;: &quot;&#39;mark&#39;&quot;, &#39;a.b.b&#39;: 2, &#39;a.b.c&#39;: 1}</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.is_number">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">is_number</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span></dt>
+<dd><div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="s1">&#39;45&#39;</span><span class="p">)</span>
+<span class="go">False</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="mi">45</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="mf">45.0</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">is_number</span><span class="p">(</span><span class="mi">45</span><span class="o">/</span><span class="mi">56</span><span class="p">)</span>
+<span class="go">True</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.ispartial">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">ispartial</code><span class="sig-paren">(</span><em>x</em><span class="sig-paren">)</span></dt>
+<dd><p>If log line starts with a space it is recognized as a partial line
+&gt;&gt;&gt; ispartial(‘&lt;time&gt; &lt;event&gt; &lt;some_log_line&gt;’)
+False
+&gt;&gt;&gt; ispartial(‘ &lt;space&gt; &lt;traceback:&gt; &lt;some_line&gt;’)
+True
+&gt;&gt;&gt; ispartial(‘         &lt;tab&gt; &lt;traceback:&gt; &lt;some_line&gt;’)
+True
+&gt;&gt;&gt; ispartial(‘   &lt;white_space&gt; &lt;traceback:&gt; &lt;some_line&gt;’)
+True
+&gt;&gt;&gt; ispartial(‘’)
+False</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.load_object">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">load_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.log_exception">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">log_exception</code><span class="sig-paren">(</span><em>self</em>, <em>__fn__</em><span class="sig-paren">)</span></dt>
+<dd><p>logging</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.memoize">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">memoize</code><span class="sig-paren">(</span><em>f</em><span class="sig-paren">)</span></dt>
+<dd><p># from: <a class="reference external" href="https://goo.gl/aXt4Qy">https://goo.gl/aXt4Qy</a>
+# TODO: Test cases</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.serialize_dict_keys">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">serialize_dict_keys</code><span class="sig-paren">(</span><em>d</em>, <em>prefix=''</em><span class="sig-paren">)</span></dt>
+<dd><p>Returns all the keys in a dictionary.
+&gt;&gt;&gt; from pprint import pprint
+&gt;&gt;&gt; d = {“a”: {“b”: {“c”: 1, “b”: 2} } }
+&gt;&gt;&gt; pprint(serialize_dict_keys(d))
+[‘a’, ‘a.b’, ‘a.b.b’, ‘a.b.c’]</p>
+</dd></dl>
+
+<dl class="function">
+<dt id="logagg_utils.utils.start_daemon_thread">
+<code class="descclassname">logagg_utils.utils.</code><code class="descname">start_daemon_thread</code><span class="sig-paren">(</span><em>target</em>, <em>args=()</em><span class="sig-paren">)</span></dt>
+<dd><p>Starts a deamon thread for a given target function and arguments
+&gt;&gt;&gt; def hello():
+…     for i in range(5): print(‘hello world!’)
+&gt;&gt;&gt; th = start_daemon_thread(hello).join()
+hello world!
+hello world!
+hello world!
+hello world!
+hello world!</p>
+</dd></dl>
+
+</div>
+<div class="section" id="module-logagg_utils">
+<span id="module-contents"></span><h2>Module contents</h2>
+<dl class="function">
+<dt id="logagg_utils.load_object">
+<code class="descclassname">logagg_utils.</code><code class="descname">load_object</code><span class="sig-paren">(</span><span class="sig-paren">)</span></dt>
+<dd><p>x.__getitem__(y) &lt;==&gt; x[y]</p>
+</dd></dl>
+
+</div>
+</div>
+
+
+          </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  </body>
+</html>

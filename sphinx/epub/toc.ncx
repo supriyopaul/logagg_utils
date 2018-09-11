@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<ncx version="2005-1" xmlns="http://www.daisy.org/z3986/2005/ncx/">
+  <head>
+    <meta name="dtb:uid" content="unknown"/>
+    <meta name="dtb:depth" content="2"/>
+    <meta name="dtb:totalPageCount" content="0"/>
+    <meta name="dtb:maxPageNumber" content="0"/>
+  </head>
+  <docTitle>
+    <text>logagg_utils</text>
+  </docTitle>
+  <navMap>    
+    <navPoint id="navPoint1" playOrder="1">
+      <navLabel>
+        <text>logagg_utils</text>
+      </navLabel>
+      <content src="index.xhtml" />  
+    </navPoint>
+    <navPoint id="navPoint2" playOrder="2">
+      <navLabel>
+        <text>logagg_utils package</text>
+      </navLabel>
+      <content src="logagg_utils.xhtml" />  
+      <navPoint id="navPoint3" playOrder="2">
+        <navLabel>
+          <text>logagg_utils package</text>
+        </navLabel>
+        <content src="logagg_utils.xhtml" />  
+      </navPoint>
+      <navPoint id="navPoint4" playOrder="3">
+        <navLabel>
+          <text>Submodules</text>
+        </navLabel>
+        <content src="logagg_utils.xhtml#submodules" />  
+      </navPoint>
+      <navPoint id="navPoint5" playOrder="4">
+        <navLabel>
+          <text>logagg_utils.utils module</text>
+        </navLabel>
+        <content src="logagg_utils.xhtml#module-logagg_utils.utils" />  
+      </navPoint>
+      <navPoint id="navPoint6" playOrder="5">
+        <navLabel>
+          <text>Module contents</text>
+        </navLabel>
+        <content src="logagg_utils.xhtml#module-logagg_utils" />  
+      </navPoint>
+    </navPoint>
+  </navMap>
+</ncx>
