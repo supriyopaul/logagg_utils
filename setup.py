@@ -15,8 +15,11 @@ setup(
     install_requires=[
         "deeputil==0.2.5",
         "six==1.11.0",
-        "tornado==5.1.1",
+        "tornado",
         "basescript==0.2.6",
+        "requests==2.19.1",
+        "nsq-py==0.1.10",
+
     ],
     packages=find_packages('.'),
     include_package_data=True,
