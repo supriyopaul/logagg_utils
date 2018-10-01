@@ -11,4 +11,6 @@ from .utils import is_number
 from .utils import is_number
 from .utils import is_number
 from .utils import ensure_dir
-from .nsq_api import main
+
+from .exceptions import *
+from .nsqsender import NSQSender

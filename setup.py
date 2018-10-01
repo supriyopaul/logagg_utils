@@ -15,11 +15,7 @@ setup(
     install_requires=[
         "deeputil==0.2.5",
         "six==1.11.0",
-        "tornado",
-        "basescript==0.2.6",
         "requests==2.19.1",
-        "nsq-py==0.1.10",
-
     ],
     packages=find_packages('.'),
     include_package_data=True,
@@ -32,9 +28,4 @@ setup(
         "License :: OSI Approved :: MIT License",
     ],
     test_suite='test.suite_maker',
-    entry_points={
-        "console_scripts": [
-            "nsq-api = logagg_utils:main",
-            ]
-        }
 )

@@ -3,7 +3,8 @@ import json
 
 import requests
 from deeputil import keeprunning
-from logagg_utils import utils
+
+from . import utils
 
 class NSQSender(object):
 
